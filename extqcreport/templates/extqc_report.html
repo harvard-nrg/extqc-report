@@ -1,0 +1,175 @@
+<html>
+<link href="{{ stylesheet }}" media="all" rel="stylesheet" />
+<script language="javascript">
+// round summary values
+window.onload = function() {
+  var elements = document.getElementsByClassName("param_val");
+  for (var i = 0; i < elements.length; ++i) {
+    var e = elements[i];
+    var value = e.innerHTML;
+    if (value.indexOf('.') == -1)
+        continue;
+    var flt = parseFloat(value);
+    e.innerHTML = flt.toFixed(3);
+  }
+}
+</script>
+<body style="margin: 0px">
+  <table style="width: 100%">
+    <tr>
+      <td colspan="2">
+        <span class="title">{{ assessor.id }} - {{ scan.note }}</span>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <table>
+          <tr>
+            <td>
+              <table class="tbl">
+                <tr>
+                  <td class="tbl_hdr"><strong>Summary</strong></td>
+                </tr>
+                <tr>
+                  <td class="inner_hdr">MR Session</td>
+                </tr>
+                <tr>
+                  <td class="tbl_val">{{ assessor.session_label }}</td>
+                </tr>
+                <tr>
+                  <td class="inner_hdr">Subject</td>
+                </tr>
+                <tr>
+                  <td class="tbl_val">{{ assessor.subject_label }}</td>
+                </tr>
+                <tr>
+                  <td class="inner_hdr">Date Acquired</td>
+                </tr>
+                <tr>
+                  <td class="tbl_val">{{ scan.date_scanned }}</td>
+                </tr>
+                <tr>
+                  <td class="inner_hdr">Scan</td>
+                </tr>
+                <tr>
+                  <td class="tbl_val">{{ scan.id }}</td>
+                </tr>
+              </table>
+              <br />
+              <table class="tbl">
+                <tr>
+                  <td class="inner_hdr" colspan="2">Parameters</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Num Volumes:</td>
+                  <td class="tbl_val param_val">{{ assessor.n_vols }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Num Voxels:</td>
+                  <td class="tbl_val param_val">{{ assessor.qc_nvox }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Mask Threshold:</td>
+                  <td class="tbl_val param_val">{{ assessor.qc_thresh }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Skip:</td>
+                  <td class="tbl_val param_val">{{ assessor.skip }}</td>
+                </tr>
+                <tr>
+                  <td class="inner_hdr" colspan="2">QC Overview</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Mean:</td>
+                  <td class="tbl_val param_val">{{ assessor.qc_mean }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">StDev:</td>
+                  <td class="tbl_val param_val">{{ assessor.qc_stdev }}</td>
+                </tr>
+                <tr style="font-weight: bold">
+                  <td class="param_key">Slice SNR:</td>
+                  <td class="tbl_val param_val">{{ assessor.qc_ssnr }}</td>
+                </tr>
+                <tr style="font-weight: bold">
+                  <td class="param_key">Voxel SNR:</td>
+                  <td class="tbl_val param_val">{{ assessor.qc_vsnr }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Mean Rel Motion:</td>
+                  <td class="tbl_val param_val">{{ assessor.mot_rel_xyz_mean }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Max Rel Motion:</td>
+                  <td class="tbl_val param_val">{{ assessor.mot_rel_xyz_max }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Mean Abs Motion:</td>
+                  <td class="tbl_val param_val">{{ assessor.mot_abs_xyz_mean }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Max Abs Motion:</td>
+                  <td class="tbl_val param_val">{{ assessor.mot_abs_xyz_max }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Movements (&gt;.1mm):</td>
+                  <td class="tbl_val param_val">{{ assessor.mot_rel_xyz_1mm }}</td>
+                </tr>
+                <tr>
+                  <td class="param_key">Movements (&gt;.5mm):</td>
+                  <td class="tbl_val param_val">{{ assessor.mot_rel_xyz_5mm }}</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table class="image_tbl">
+                <tr>
+                  <td>
+                    <figure>
+                      <img class="image" src="{{ snr_image }}" />
+                      <figcaption class="figcap">Signal-to-Noise Ratio (SNR)</figcaption>
+                    </figure>
+                  </td>
+                  <td>
+                    <figure>
+                      <img class="image" src="{{ mean_image }}" />
+                      <figcaption class="figcap">Mean</figcaption>
+                    </figure>
+                  </td>
+                  <td>
+                    <figure>
+                      <img class="image" src="{{ sd_image }}" />
+                      <figcaption class="figcap">Standard Deviation (StDev)</figcaption>
+                    </figure>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    <figure>
+                      <img class="image" src="{{ slope_image }}" />
+                      <figcaption class="figcap">Slope</figcaption>
+                    </figure>
+                  </td>
+                  <td>
+                    <figure>
+                      <img class="image" src="{{ mean_data }}" />
+                      <figcaption class="figcap">Mean Slice Intensity Over Time</figcaption>
+                    </figure>
+                  </td>
+                  <td>
+                    <figure>
+                      <img class="image" src="{{ motion_data }}" />
+                      <figcaption class="figcap">Motion Over Time</figcaption>
+                    </figure>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
+

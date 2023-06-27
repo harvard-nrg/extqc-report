@@ -1,0 +1,6 @@
+__title__ = 'ExtendedBOLDQC PDF Report Generator'
+__description__ = 'ExtendedBOLDQC PDF Report Generator'
+__url__ = 'https://github.com/harvard-nrg/extqc-report'
+__version__ = '4.0.0'
+__author__ = 'Neuroinformatics Research Group'
+__author_email__ = 'info@neuroinfo.org'

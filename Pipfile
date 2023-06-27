@@ -1,0 +1,16 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+yaxil = "*"
+jinja2 = "*"
+playwright = "*"
+requests-cache = "*"
+extqcreport = {path = ".", editable = "true"}
+
+[dev-packages]
+
+[requires]
+python_version = "3"

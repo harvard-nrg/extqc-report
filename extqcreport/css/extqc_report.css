@@ -1,0 +1,57 @@
+.image {
+    width: 150px;
+}
+
+.title {
+    font-size: 10px;
+    font-weight: bold;
+    font-family: "DejaVu Sans Mono",verdana,geneva,helvetica;
+    margin-left: 5px;
+}
+
+.image_tbl {
+    border-collapse: collapse;
+}
+
+.tbl {
+    background-color: #F5F5F5;
+    border: 1px solid #ECECEC
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 8px;
+    font-family: "DejaVu Sans Mono",verdana,geneva,helvetica;
+}
+
+.tbl_hdr {
+    background-color: white;
+    font-weight: bold;
+    padding: 4px;
+}
+
+.tbl_val {
+    font-family: "Nimbus Mono L",verdana,geneva,helvetica;    
+}
+
+.inner_hdr {
+    background-color: #DAD9D8;
+    font-weight: bold;
+    padding: 4px;
+}
+
+.param_val {
+    text-align: right;
+}
+
+figure {
+    margin: 0px 4px 4px 0px;
+}
+
+.figcap {
+    font-size: 7px;
+    font-family: "DejaVu Sans Mono",verdana,geneva,helvetica;
+}
+
+td {
+    vertical-align: top;
+}
+
