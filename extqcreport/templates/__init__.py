@@ -8,3 +8,10 @@ def extqc_report():
         'extqc_report.html'
     )
     return html
+
+def boldqc_report():
+    html = os.path.join(
+        __dirname__,
+        'boldqc_report.html'
+    )
+    return html

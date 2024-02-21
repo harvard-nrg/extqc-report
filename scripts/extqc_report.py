@@ -7,6 +7,7 @@ import yaxil
 import asyncio
 import logging
 import requests
+import importlib
 import requests_cache
 import argparse as ap
 import tempfile as tf
@@ -15,7 +16,6 @@ import subprocess as sp
 import extqcreport.css as css
 import extqcreport.browser as browser
 import extqcreport.templates as templates
-import yaxil.assessments.neuroinfo.legacy as neuroinfo
 
 logger = logging.getLogger(os.path.basename(__file__))
 logging.basicConfig(level=logging.INFO)
@@ -32,7 +32,7 @@ async def main():
         help='MR Session project')
     parser.add_argument('--scan', '-s', nargs='+', default=[], required=True, 
         help="Scans")
-    parser.add_argument('--template', "-t", default=templates.extqc_report(),
+    parser.add_argument('--template', "-t", default=templates.boldqc_report(),
         help="Jinja2 template to generate BOLDQC PDF")
     parser.add_argument('--orientation', choices=['portrait', 'landscape'],
         default='landscape', help='Orient report in portrait or landscape')
@@ -44,9 +44,18 @@ async def main():
         help='Output PDF file directory')
     parser.add_argument('--cache', action='store_true',
         help='Cache XNAT responses to speed up debugging a little')
+    parser.add_argument('--boldqc-version', choices=['default', 'legacy'],
+        default='default', help='Request BOLDQC data from specific version')
     parser.add_argument('-v', '--verbose', action='store_true',
         help='Enable verbose mode')
     args = parser.parse_args()
+
+    if args.boldqc_version == 'legacy':
+        logger.info('loading legacy extendedboldqc assessment api and html template')
+        neuroinfo = importlib.import_module('yaxil.assessments.neuroinfo.legacy')
+        args.template = templates.extqc_report()
+    else:
+        neuroinfo = importlib.import_module('yaxil.assessments.neuroinfo')
 
     if args.verbose:
         logging.getLogger('extqc_report.py').setLevel(logging.DEBUG)
@@ -107,16 +116,16 @@ async def main():
         )
         assessor = next(assessors)
         files = file_urls(auth.url, assessor)
-        
+
         # build arguments for populating jinja template
         values = {
             'url': auth.url,
             'experiment': experiment,
             'scan': ap.Namespace(**scan),
             'assessor': ap.Namespace(**assessor),
-            'stylesheet': f'file://{args.stylesheet}'
+            'stylesheet': f'file://{args.stylesheet}',
+            'files': files
         }
-        values.update(files)
 
         # read in the jinja template
         args.template = os.path.expanduser(args.template)
